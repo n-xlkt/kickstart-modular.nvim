@@ -10,38 +10,31 @@
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
+  { 'NMAC427/guess-indent.nvim', opts = {} },
 
-  -- NOTE: Plugins can also be added by using a table,
-  -- with the first argument being the link and the following
-  -- keys can be used to configure plugin behavior/loading/etc.
-  --
-  -- Use `opts = {}` to force a plugin to be loaded.
-  --
-
-  -- modular approach: using `require 'path/name'` will
+  -- modular approach: using `require 'path.name'` will
   -- include a plugin definition from file lua/path/name.lua
 
-  require 'kickstart/plugins/gitsigns',
+  require 'kickstart.plugins.gitsigns',
 
-  require 'kickstart/plugins/which-key',
+  require 'kickstart.plugins.which-key',
 
-  require 'kickstart/plugins/telescope',
+  require 'kickstart.plugins.telescope',
 
-  require 'kickstart/plugins/lspconfig',
+  require 'kickstart.plugins.lspconfig',
 
-  require 'kickstart/plugins/conform',
+  require 'kickstart.plugins.conform',
 
-  require 'kickstart/plugins/cmp',
+  require 'kickstart.plugins.blink-cmp',
 
-  require 'kickstart/plugins/tokyonight',
+  require 'kickstart.plugins.tokyonight',
 
-  require 'kickstart/plugins/todo-comments',
+  require 'kickstart.plugins.todo-comments',
 
-  require 'kickstart/plugins/mini',
+  require 'kickstart.plugins.mini',
 
-  require 'kickstart/plugins/treesitter',
+  require 'kickstart.plugins.treesitter',
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -68,15 +61,11 @@ require('lazy').setup({
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
-}, {
+}, { ---@diagnostic disable-line: missing-fields
   dev = {
-    -- Directory where you store your local plugin projects. If a function is used,
-    -- the plugin directory (e.g. `~/projects/plugin-name`) must be returned.
-    ---@type string | fun(plugin: LazyPlugin): string
     path = '~/projects',
-    ---@type string[] plugins that match these patterns will use your local versions instead of being fetched from GitHub
-    patterns = {}, -- For example {"folke"}
-    fallback = false, -- Fallback to git when local plugin doesn't exist
+    patterns = {},
+    fallback = false,
   },
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

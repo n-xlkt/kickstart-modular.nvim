@@ -51,7 +51,6 @@ return {
   {
     'micangl/cmp-vimtex',
     ft = 'tex',
-    dependencies = { 'hrsh7th/nvim-cmp' },
     config = function()
       require('cmp_vimtex').setup {
         additional_information = {
@@ -65,7 +64,7 @@ return {
           enabled = true,
         },
         search = {
-          browser = 'xdg-open',
+          browser = 'open',
           default = 'google_scholar',
           search_engines = {
             google_scholar = {
@@ -75,18 +74,21 @@ return {
           },
         },
       }
-
-      -- Add vimtex source to cmp for tex files only
-      local cmp = require 'cmp'
-      cmp.setup.filetype('tex', {
-        sources = cmp.config.sources {
-          { name = 'vimtex' },
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'path' },
-        },
-      })
     end,
+  },
+  {
+    'saghen/blink.cmp',
+    opts = {
+      sources = {
+        default = { 'vimtex' },
+        providers = {
+          vimtex = {
+            name = 'vimtex',
+            module = 'cmp_vimtex.blink',
+          },
+        },
+      },
+    },
   },
   {
     'nvim-telescope/telescope-bibtex.nvim',

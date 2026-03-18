@@ -2,9 +2,14 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { 'mermaid', 'bibtex' })
-      opts.ignore_install = { 'latex' }
+    init = function()
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'VeryLazy',
+        once = true,
+        callback = function()
+          require('nvim-treesitter').install { 'mermaid', 'bibtex' }
+        end,
+      })
     end,
   },
 }
