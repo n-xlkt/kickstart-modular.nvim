@@ -98,7 +98,7 @@ require 'options'
 
 -- Custom option overrides (keep kickstart options.lua clean for upstream merges)
 vim.opt.relativenumber = true
-vim.wo.conceallevel = 2
+vim.opt.conceallevel = 2
 
 -- [[ Basic Keymaps ]]
 require 'keymaps'

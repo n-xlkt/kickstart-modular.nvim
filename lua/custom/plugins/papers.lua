@@ -95,32 +95,33 @@ return {
     dependencies = { 'nvim-telescope/telescope.nvim' },
     ft = { 'tex', 'markdown' },
     config = function()
-      require('telescope').setup {
-        extensions = {
-          bibtex = {
-            depth = 1,
-            global_files = { '~/Library/texmf/bibtex/bib/Zotero.bib' },
-            search_keys = { 'author', 'year', 'title' },
-            citation_format = '{{author}} ({{year}}), {{title}}.',
-            citation_trim_firstname = true,
-            citation_max_auth = 2,
-            custom_formats = {
-              { id = 'citet', cite_maker = '\\citet{%s}' },
-            },
-            format = 'citet',
-            context = true,
-            context_fallback = true,
-            wrap = false,
-          },
-        },
-      }
       require('telescope').load_extension 'bibtex'
     end,
   },
   {
+    'nvim-telescope/telescope.nvim',
+    opts = {
+      extensions = {
+        bibtex = {
+          depth = 1,
+          global_files = { '~/Library/texmf/bibtex/bib/Zotero.bib' },
+          search_keys = { 'author', 'year', 'title' },
+          citation_format = '{{author}} ({{year}}), {{title}}.',
+          citation_trim_firstname = true,
+          citation_max_auth = 2,
+          custom_formats = {
+            { id = 'citet', cite_maker = '\\citet{%s}' },
+          },
+          format = 'citet',
+          context = true,
+          context_fallback = true,
+          wrap = false,
+        },
+      },
+    },
+  },
+  {
     'andrewferrier/wrapping.nvim',
-    config = function()
-      require('wrapping').setup()
-    end,
+    opts = {},
   },
 }
