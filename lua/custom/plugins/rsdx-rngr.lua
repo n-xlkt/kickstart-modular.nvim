@@ -4,15 +4,9 @@ return {
     dependencies = { 'rktjmp/lush.nvim' },
     lazy = false,
     priority = 1000,
-    init = function()
+    config = function()
       vim.opt.termguicolors = true
-      -- Use VimEnter to ensure this runs after all plugin configs (including tokyonight)
-      vim.api.nvim_create_autocmd('VimEnter', {
-        once = true,
-        callback = function()
-          vim.cmd.colorscheme 'rsdx-rngr'
-        end,
-      })
+      vim.cmd.colorscheme 'rsdx-rngr'
     end,
   },
 }
