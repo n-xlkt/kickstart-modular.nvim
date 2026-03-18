@@ -1,18 +1,16 @@
--- Academic writing: vimtex, cmp-vimtex, telescope-bibtex, pandoc, wrapping
+-- Academic writing: LaTeX, Typst, bibliography, pandoc, writing aids
 return {
+  -- LaTeX + Pandoc
   {
     'lervag/vimtex',
     init = function()
-      -- Viewer settings
       vim.g.vimtex_view_method = 'skim'
       vim.g.vimtex_context_pdf_viewer = 'zathura'
 
-      -- Indentation settings
       vim.g.vimtex_indent_enabled = false
       vim.g.tex_indent_items = false
       vim.g.tex_indent_brace = false
 
-      -- Suppression settings
       vim.g.vimtex_quickfix_mode = 0
       vim.g.vimtex_log_ignore = {
         'Underfull',
@@ -21,13 +19,10 @@ return {
         'Token not allowed in a PDF string',
       }
 
-      -- Other settings
       vim.g.vimtex_mappings_enabled = false
       vim.g.tex_flavor = 'latex'
 
-      -- which-key mappings
-      local wk = require 'which-key'
-      wk.add {
+      require('which-key').add {
         { '<leader>v', group = '[V]imtex' },
         { '<leader>vb', '<cmd>VimtexCompile<CR>', desc = 'Build' },
         { '<leader>vc', '<cmd>:VimtexClearCache All<CR>', desc = 'Clear' },
@@ -60,9 +55,7 @@ return {
           match_against_info = true,
           symbols_in_menu = true,
         },
-        bibtex_parser = {
-          enabled = true,
-        },
+        bibtex_parser = { enabled = true },
         search = {
           browser = 'open',
           default = 'google_scholar',
@@ -90,10 +83,12 @@ return {
       },
     },
   },
+
+  -- Bibliography / citations
   {
     'nvim-telescope/telescope-bibtex.nvim',
     dependencies = { 'nvim-telescope/telescope.nvim' },
-    ft = { 'tex', 'markdown' },
+    ft = { 'tex', 'markdown', 'typst' },
     config = function()
       require('telescope').load_extension 'bibtex'
     end,
@@ -120,8 +115,7 @@ return {
       },
     },
   },
-  {
-    'andrewferrier/wrapping.nvim',
-    opts = {},
-  },
+
+  -- Writing aids
+  { 'andrewferrier/wrapping.nvim', opts = {} },
 }
