@@ -2,10 +2,17 @@ return {
   {
     dir = '~/Code/rsdx-rngr.nvim',
     dependencies = { 'rktjmp/lush.nvim' },
+    lazy = false,
     priority = 1000,
-    config = function()
+    init = function()
       vim.opt.termguicolors = true
-      vim.cmd.colorscheme 'rsdx-rngr'
+      -- Use VimEnter to ensure this runs after all plugin configs (including tokyonight)
+      vim.api.nvim_create_autocmd('VimEnter', {
+        once = true,
+        callback = function()
+          vim.cmd.colorscheme 'rsdx-rngr'
+        end,
+      })
     end,
   },
 }
