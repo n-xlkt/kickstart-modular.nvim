@@ -69,21 +69,6 @@ return {
       }
     end,
   },
-  {
-    'saghen/blink.cmp',
-    opts = {
-      sources = {
-        default = { 'vimtex' },
-        providers = {
-          vimtex = {
-            name = 'vimtex',
-            module = 'cmp_vimtex.blink',
-          },
-        },
-      },
-    },
-  },
-
   -- Bibliography / citations
   {
     'nvim-telescope/telescope-bibtex.nvim',
