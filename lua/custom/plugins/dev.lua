@@ -13,7 +13,12 @@ vim.api.nvim_create_autocmd('User', {
     end
 
     -- Typst
-    vim.lsp.config('tinymist', { settings = { exportPdf = 'onSave' } })
+    vim.lsp.config('tinymist', {
+      settings = {
+        exportPdf = 'onSave',
+        formatterMode = 'typstyle',
+      },
+    })
     vim.lsp.enable 'tinymist'
 
     -- Lua (lazydev handles workspace library, so we skip the expensive scan)
@@ -67,7 +72,6 @@ return {
       formatters_by_ft = {
         python = { 'ruff_format' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        typst = { 'typstfmt' },
       },
     },
   },
@@ -110,12 +114,4 @@ return {
     },
   },
 
-  -- Tooling (Mason)
-  {
-    'williamboman/mason.nvim',
-    opts = function(_, opts)
-      opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, { 'ruff', 'prettierd', 'tinymist', 'typstfmt' })
-    end,
-  },
 }
