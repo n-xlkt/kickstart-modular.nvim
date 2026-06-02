@@ -18,7 +18,9 @@ vim.api.nvim_create_autocmd('User', {
 
     -- Lua (lazydev handles workspace library, so we skip the expensive scan)
     vim.lsp.config('lua_ls', {
+      settings = { Lua = { format = { enable = false } } },
       on_init = function(client)
+        client.server_capabilities.documentFormattingProvider = false
         if client.workspace_folders then
           local path = client.workspace_folders[1].name
           if path ~= vim.fn.stdpath 'config'
@@ -43,15 +45,6 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
--- Treesitter parsers
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'VeryLazy',
-  once = true,
-  callback = function()
-    require('nvim-treesitter').install { 'mermaid', 'typst', 'bibtex' }
-  end,
-})
-
 return {
   -- LSP
   {
@@ -65,6 +58,12 @@ return {
   {
     'stevearc/conform.nvim',
     opts = {
+      format_on_save = function(bufnr)
+        local enabled = { lua = true, python = true, javascript = true, typescript = true, typst = true }
+        if enabled[vim.bo[bufnr].filetype] then
+          return { timeout_ms = 500 }
+        end
+      end,
       formatters_by_ft = {
         python = { 'ruff_format' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
@@ -83,6 +82,10 @@ return {
         python = { 'ruff' },
         markdown = { 'markdownlint' },
       }
+
+      vim.list_extend(lint.linters.markdownlint.args, {
+        '--disable', 'MD013', '--',
+      })
 
       local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
       vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
