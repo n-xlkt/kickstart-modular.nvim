@@ -14,8 +14,7 @@ vim.api.nvim_create_autocmd('User', {
 
     -- Typst
     vim.lsp.config('tinymist', {
-      settings = {
-        exportPdf = 'onSave',
+      init_options = {
         formatterMode = 'typstyle',
       },
     })
@@ -47,6 +46,20 @@ vim.api.nvim_create_autocmd('User', {
         })
       end,
     })
+  end,
+})
+
+-- Typst: rebuild PDF on save (replaces tinymist's broken exportPdf=onSave, see #1452)
+vim.api.nvim_create_autocmd('BufWritePost', {
+  pattern = '*.typ',
+  callback = function(args)
+    vim.system({ 'typst', 'compile', args.file }, { text = true }, function(result)
+      if result.code ~= 0 then
+        vim.schedule(function()
+          vim.notify('typst compile failed:\n' .. (result.stderr or ''), vim.log.levels.ERROR)
+        end)
+      end
+    end)
   end,
 })
 
